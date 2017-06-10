@@ -3,7 +3,7 @@
 
 int main ()
 {
-	HashTbl a;
+	HashTbl<int, int> a;
 	std::cout << "Hello\n";
 	return EXIT_SUCCESS;
 

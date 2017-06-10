@@ -1,5 +1,5 @@
 template< typename KeyType, typename DataType >
-bool HashTbl::insert
+bool HashTbl<KeyType, DataType>::insert
 ( const KeyType & k_ , const DataType & d_ )
 {
 	//<! calcula endereço
@@ -16,7 +16,7 @@ bool HashTbl::insert
 		auto i = m_data_table[end].begin();
 		auto l = m_data_table[end].end();
 
-		for ( /*empty*/; i != j; ++i )
+		for ( /*empty*/; i != l; ++i )
 		{
 			if ( *i == d_ )
 			{
@@ -31,7 +31,7 @@ bool HashTbl::insert
 }
 
 template< typename KeyType, typename DataType >
-bool HashTbk::remove
+bool HashTbl<KeyType, DataType>::remove
 ( const KeyType & k_ )
 {
 	//<! calcula endereço
@@ -46,7 +46,7 @@ bool HashTbk::remove
 }
 
 template< typename KeyType, typename DataType >
-bool HashTbl::retrieve
+bool HashTbl<KeyType, DataType>::retrieve
 ( const KeyType & k_ , DataType & d_ ) const
 {
 	//<! calcula endereço
@@ -59,14 +59,14 @@ bool HashTbl::retrieve
 }
 
 template< typename KeyType, typename DataType >
-void HashTbl::clear ( void )
+void HashTbl<KeyType, DataType>::clear ( void )
 {
-	for ( auto i(0); i < m_size; ++i)
+	for ( auto i(0u); i < m_size; ++i)
 			m_data_table[i].clear();
 }
 
 template< typename KeyType, typename DataType >
-bool HashTbl::empty ( void ) const
+bool HashTbl<KeyType, DataType>::empty ( void ) const
 {
 	for ( auto i(0); i < m_size; ++i )
 		if ( !m_data_table[i].empty() )
@@ -76,14 +76,14 @@ bool HashTbl::empty ( void ) const
 }
 
 template< typename KeyType, typename DataType >
-unsigned long int HashTbl::count
+unsigned long int HashTbl<KeyType, DataType>::count
 ( void ) const
 {
 	return m_count;
 }
 
 template< typename KeyType, typename DataType >
-void Hash::print () const
+void HashTbl<KeyType, DataType>::print () const
 {
 	std::cout << "\n TABLE \n [ ";
 	for ( auto i(0); i < m_size; ++i )
