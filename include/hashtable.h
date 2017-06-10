@@ -33,7 +33,7 @@ class HashTbl {
 	virtual ~ HashTbl () 
 	{
 		clear();
-		delete [] *m_data_table;
+		m_data_table.get_deleter();
 	}
 
 	bool insert ( const KeyType & k_ , const DataType & d_ );
