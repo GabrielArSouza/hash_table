@@ -3,6 +3,8 @@
 
 #include <forward_list>
 #include <memory>
+#include <functional>
+#include <iomanip>
 
 template <class KeyType, class DataType>
 class HashEntry {
@@ -19,15 +21,19 @@ class HashEntry {
 
 };
 
-template< typename KeyType, typename DataType >
+template< typename KeyType,
+		  typename DataType,
+		  typename KeyHash = std::hash < KeyType >,
+		  typename KeyEqual = std::equal_to < KeyType > >
 class HashTbl {
 
+	using Entry = HashEntry < KeyType , DataType >; //!< Alias
 	public:
 
-	using Entry = HashEntry < KeyType , DataType >; //!< Alias
 	HashTbl ( int tbl_size_ = DEFAULT_SIZE )
 		: m_size( tbl_size_ )
 		, m_count( 0 )
+		, m_data_table( new std::forward_list< Entry >[tbl_size_] )
 	{/*empty*/}
 
 	virtual ~ HashTbl () 
