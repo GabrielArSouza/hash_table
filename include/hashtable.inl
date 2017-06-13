@@ -78,13 +78,25 @@ template< typename KeyType,
 bool HashTbl<KeyType, DataType, KeyHash, KeyEqual>::retrieve
 ( const KeyType & k_ , DataType & d_ ) const
 {
+	KeyHash hashFunc;  //<! instancia função de dispersão 1
+	KeyEqual equalFunc; //<! instancia função de comparação
+	                        
 	//<! calcula endereço
-	auto end = k_%count();
+	auto end( hashFunc(k_) % m_size );
 
 	if ( m_data_table[end].empty() )
 		return false;
+	else 
+	{
+		auto i = m_data_table[end].begin();
+		auto l = m_data_table[end].end();
 
-	return true;
+		for ( /*empty*/; i != l; ++i )
+		{
+			if ( equalFunc( (*i).m_key, k_ ) ) return true;
+		}
+	}
+	return false;
 }
 
 template< typename KeyType,
@@ -103,7 +115,7 @@ template< typename KeyType,
 		  typename KeyEqual>
 bool HashTbl<KeyType, DataType, KeyHash, KeyEqual>::empty ( void ) const
 {
-	for ( auto i(0); i < m_size; ++i )
+	for ( auto i(0u); i < m_size; ++i )
 		if ( !m_data_table[i].empty() )
 			return false;
 
@@ -127,8 +139,7 @@ template< typename KeyType,
 		  typename KeyEqual>
 void HashTbl<KeyType, DataType, KeyHash, KeyEqual>::print () const
 {
-	/*cabeçalho*/
-	
+	/*cabeçalho*/	
 	std::cout << "[ ID, NAME, BANK, BRANCH, ACCOUNT, BALANCE ]\n";
 	std::cout << "\n";
 	for ( auto i(0u); i < m_size; ++i )

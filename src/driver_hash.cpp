@@ -2,6 +2,7 @@
 #include <string>
 #include <utility>
 #include <tuple>
+#include <cassert>
 
 #include "hashtable.h"
 
@@ -90,6 +91,7 @@ int main ()
 	Account d = {"Jose Lima", 18, 331, 1231, 850.00};
 	Account e = {"Saulo Cunha", 116, 666, 84312, 5490.00};
 
+	//<! testando o insert
 	tb.insert(a.get_key(), a);
 	tb.insert(b.get_key(), b);
 	tb.insert(c.get_key(), c);
@@ -98,12 +100,29 @@ int main ()
 	
 	tb.print();
 
+	//<! Testando Remove
 	tb.remove(d.get_key());
+	std::cout << "\n";
 
 	tb.print();
 	
 	tb.remove(d.get_key());
+
+	//<! Testando Retrieve
+	assert( tb.retrieve(e.get_key(), e));
+	assert((tb.retrieve(d.get_key(), d)) == false );
+
+	//<! Testando clear
+	tb.clear();
+	std::cout << "\n";
+	tb.print();
+
+	//<! Testando o empty
+	assert( tb.empty() );
+	tb.insert(a.get_key(), a);
+	assert( (tb.empty()) == false );
 	
+	std::cout << "\n >>>Passou em todos os testes. \n";
 	return 0;
 
 }
